@@ -4,7 +4,6 @@ using System.Diagnostics;
 
 public abstract class Character : MonoBehaviour
 {
-
     public float Health;
     public float Speed;
 

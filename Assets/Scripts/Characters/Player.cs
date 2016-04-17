@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Player : Character
 {
-
     protected override void Movement()
     {
         Vector2 newPos = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * Speed * Time.deltaTime;

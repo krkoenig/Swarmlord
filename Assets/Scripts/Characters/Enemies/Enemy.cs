@@ -5,14 +5,6 @@ using System.Diagnostics;
 public class Enemy : Character {
 
     public Path Path;
-    public float FireDelay;
-
-
-    protected override void Start()
-    {
-        base.Start();
-
-    }
 
     protected override void Movement()
     {
