@@ -8,7 +8,6 @@ public class Projectile : MonoBehaviour {
     public float Damage;
 
     private Vector2 _startLoc;
-    private GameObject _owner;
     protected Rigidbody2D _rigid;
 
     // Use this for initialization
@@ -36,7 +35,8 @@ public class Projectile : MonoBehaviour {
     {
         print("Fired!");
 
-        if (coll.gameObject.layer == LayerMask.NameToLayer("Character") && coll.gameObject != _owner)
+        if ((coll.gameObject.layer == LayerMask.NameToLayer("Player") && CompareTag("EnemyProjectile")) ||
+            (coll.gameObject.layer == LayerMask.NameToLayer("Enemy") && CompareTag("PlayerProjectile")))
         {
             coll.gameObject.SendMessage("TakeDamage", Damage);
 
@@ -45,10 +45,5 @@ public class Projectile : MonoBehaviour {
                 Destroy(gameObject);
             }
         }    
-    }
-
-    public void SetOwner(GameObject owner)
-    {
-        _owner = owner;
     }
 }

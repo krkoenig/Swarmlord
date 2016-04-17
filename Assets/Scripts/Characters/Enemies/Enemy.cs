@@ -1,39 +1,34 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Diagnostics;
 
 public class Enemy : Character {
 
+    public Path Path;
     public float FireDelay;
-    public float FollowDistance;
 
-    private Transform _playerTransform;
 
-    // Use this for initialization
     protected override void Start()
     {
         base.Start();
-        _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+
     }
 
     protected override void Movement()
     {
-        if (Vector2.Distance(transform.position, _playerTransform.position) >= FollowDistance)
-        {
-            Vector2 newPos = Vector2.MoveTowards(transform.position, _playerTransform.position, Speed * Time.deltaTime);
+            Vector2 newPos = Vector2.MoveTowards(transform.position, Path.CurrentPoint.transform.position, Speed * Time.deltaTime);
             _rigid.MovePosition(newPos);
-
-        }
     }
 
     protected override void Fire()
     {
-        if (_fireTimer.ElapsedMilliseconds / 1000 >= FireDelay)
-        {
-            _fireTimer.Reset();
-            _fireTimer.Start();
+            GameObject p = _gun.Fire();
+            p.tag = "EnemyProjectile";
+    }
 
-            GameObject p = _gun.Fire(_playerTransform.position);
-            p.SendMessage("SetOwner", gameObject);
-        }
+    protected override void Die()
+    {
+        print(transform.parent.gameObject.name + " has died!");
+        Destroy(transform.parent.gameObject);
     }
 }
