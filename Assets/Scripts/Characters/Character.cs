@@ -11,7 +11,7 @@ public abstract class Character : MonoBehaviour
     protected Rigidbody2D _rigid;
     protected float _minX, _minY, _maxX, _maxY;
     protected Stopwatch _fireTimer = new Stopwatch();
-
+    protected Stopwatch _hitTimer = new Stopwatch();
 
     // Use this for initialization
     protected virtual void Start()
@@ -19,6 +19,7 @@ public abstract class Character : MonoBehaviour
         _gun = GetComponentInChildren<Gun>();
         _rigid = gameObject.GetComponent<Rigidbody2D>();
         _fireTimer.Start();
+        _hitTimer.Start();
 
         CalculateBounds();
     }
@@ -45,10 +46,15 @@ public abstract class Character : MonoBehaviour
 
     protected void TakeDamage(float damage)
     {
-        Health -= damage;
+        long invulnTime = 1000;
 
-        if (Health <= 0)
-            Die();
+        if(_hitTimer.ElapsedMilliseconds > invulnTime)
+        {
+            Health -= damage;
+
+            if (Health <= 0)
+                Die();
+        }
     }
 
     protected virtual void Die()

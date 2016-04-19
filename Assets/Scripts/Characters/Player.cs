@@ -19,8 +19,7 @@ public class Player : Character
     {
         if (Input.GetAxis("Fire1") > 0)
         {
-            GameObject p = _gun.Fire();
-            p.tag = "PlayerProjectile";
+            _gun.Fire();
         }
     }
 
